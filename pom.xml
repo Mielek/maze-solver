@@ -7,16 +7,16 @@
     <groupId>com.github.mielek</groupId>
     <artifactId>maze-solver</artifactId>
     <version>0.0.1</version>
-	<name>Maze solver</name>
-	<description>The maze solver is a demonstration application which solves maze(labyrinth). It contains [TODO] solving algoritms which shows different approaches to the problem.</description>
-	<url>https://github.com/Mielek/maze-solver</url>
+    <name>Maze solver</name>
+    <description>The maze solver is a demonstration application which solves maze(labyrinth). It contains [TODO] solving algoritms which shows different approaches to the problem.</description>
+    <url>https://github.com/Mielek/maze-solver</url>
 	
-	<developers>
-		<developer>
-			<id>mielek</id>
-			<name>Rafal Mielowski<name>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>mielek</id>
+            <name>Rafal Mielowski<name>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
