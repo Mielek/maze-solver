@@ -24,6 +24,10 @@ public class Maze {
         return start;
     }
 
+    public int[][] getBoard() {
+        return board;
+    }
+
 
     public static class MazeBuilder{
         Maze mazeToBuild = new Maze();
