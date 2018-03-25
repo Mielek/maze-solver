@@ -10,10 +10,14 @@ public class SimpleMazeSolver extends MazeSolver {
     @Override
     public MazePath solve() {
         MazePath path = new MazePath();
-        path.getPoints().addAll(
-                Arrays.asList(
-                        MazePoint.of(0,0),
-                        MazePoint.of(1,0)));
+        if(maze.getStart().equals(maze.getTarget())){
+            path.getPoints().add(maze.getStart());
+        } else {
+            path.getPoints().addAll(
+                    Arrays.asList(
+                            MazePoint.of(0, 0),
+                            MazePoint.of(1, 0)));
+        }
         return path;
     }
 }

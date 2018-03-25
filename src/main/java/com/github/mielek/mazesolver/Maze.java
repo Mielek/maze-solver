@@ -16,6 +16,14 @@ public class Maze {
         return new MazeBuilder();
     }
 
+    public MazePoint getTarget() {
+        return target;
+    }
+
+    public MazePoint getStart() {
+        return start;
+    }
+
 
     public static class MazeBuilder{
         Maze mazeToBuild = new Maze();
