@@ -2,54 +2,52 @@ package com.github.mielek.mazesolver;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class SimpleMazeSolverTest {
     @Test
     public void solveMazeWithOneLineCorridorInXAxis(){
-        Maze maze = Maze.builder()
-                .setBoard(new int[][]{{0},{0}})
-                .setStart(MazePoint.of(0, 0))
-                .setTarget(MazePoint.of(1, 0))
-                .build();
-        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+        int[][] board = new int[][]{{0},{0}};
+        MazePoint start = MazePoint.of(0, 0);
+        MazePoint target = MazePoint.of(1, 0);
+        MazePoint[] expectedPath = new MazePoint[]{start, target};
 
-        MazePath path = solver.solve();
-
-        assertThat(path).isNotNull();
-        assertThat(path.getPoints()).isNotNull().isNotEmpty()
-                .containsExactly(MazePoint.of(0, 0), MazePoint.of(1, 0));
+        solveMazeAndCheckExpectedPath(board,start,target,expectedPath);
     }
 
     @Test
     public void startAndTargetAtTheSamePoint(){
-        MazePoint startTargetPoint = new MazePoint(0,0);
-        Maze maze = Maze.builder()
-                .setBoard(new int[][]{{0}})
-                .setStart(startTargetPoint)
-                .setTarget(startTargetPoint)
-                .build();
-        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+        int[][] board = new int[][]{{0},{0}};
+        MazePoint start = new MazePoint(0,0);
+        MazePoint target = start;
+        MazePoint[] expectedPath = new MazePoint[]{start};
 
-        MazePath path = solver.solve();
-
-        assertThat(path).isNotNull();
-        assertThat(path.getPoints()).isNotNull().isNotNull().containsExactly(startTargetPoint);
+        solveMazeAndCheckExpectedPath(board, start, target, expectedPath);
     }
 
     @Test
     public void solveMazeWithOneLineCorridorInYAxis(){
+        int[][] board = new int[][]{{0, 0}};
+        MazePoint start = new MazePoint(0,0);
+        MazePoint target = new MazePoint(0,1);
+        MazePoint[] expectedPath = new MazePoint[]{start, target};
+
+        solveMazeAndCheckExpectedPath(board, start, target, expectedPath);
+    }
+
+    private void solveMazeAndCheckExpectedPath(int[][] board, MazePoint start, MazePoint target, MazePoint[] expectedPath) {
         Maze maze = Maze.builder()
-                .setBoard(new int[][]{{0, 0}})
-                .setStart(MazePoint.of(0, 0))
-                .setTarget(MazePoint.of(0, 1))
+                .setBoard(board)
+                .setStart(start)
+                .setTarget(target)
                 .build();
         SimpleMazeSolver solver = new SimpleMazeSolver(maze);
 
         MazePath path = solver.solve();
 
         assertThat(path).isNotNull();
-        assertThat(path.getPoints()).isNotNull().isNotEmpty()
-                .containsExactly(MazePoint.of(0, 0), MazePoint.of(0, 1));
+        assertThat(path.getPoints()).isNotNull().isNotNull().containsExactly(expectedPath);
     }
 }
