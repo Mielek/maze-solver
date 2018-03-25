@@ -60,6 +60,26 @@ public class SimpleMazeSolverTest {
         solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
     }
 
+    @Test
+    public void solveMazeWithNoPathInOneLineCorridorInXAxisBecauseOfWall() {
+        MazePoint dimension = MazePoint.of(3, 0);
+        int[][] board = new int[][]{{0}, {1}, {0}};
+        MazePoint start = MazePoint.of(0, 0);
+        MazePoint target = MazePoint.of(2, 0);
+        Maze maze = Maze.builder()
+                .setDimension(dimension)
+                .setBoard(board)
+                .setStart(start)
+                .setTarget(target)
+                .build();
+        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+
+        MazePath path = solver.solve();
+
+        assertThat(path).isNotNull();
+        assertThat(path.getPoints()).isNotNull().isEmpty();
+    }
+
     private void solveMazeAndCheckExpectedPath(MazePoint dimension, int[][] board, MazePoint start, MazePoint target, MazePoint[] expectedPath) {
         Maze maze = Maze.builder()
                 .setDimension(dimension)
@@ -72,6 +92,6 @@ public class SimpleMazeSolverTest {
         MazePath path = solver.solve();
 
         assertThat(path).isNotNull();
-        assertThat(path.getPoints()).isNotNull().isNotNull().containsExactly(expectedPath);
+        assertThat(path.getPoints()).isNotNull().isNotEmpty().containsExactly(expectedPath);
     }
 }
