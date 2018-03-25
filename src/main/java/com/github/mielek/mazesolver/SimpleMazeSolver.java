@@ -13,8 +13,7 @@ public class SimpleMazeSolver extends MazeSolver {
         path.getPoints().addAll(
                 Arrays.asList(
                         MazePoint.of(0,0),
-                        MazePoint.of(1,0),
-                        MazePoint.of(2,0)));
+                        MazePoint.of(1,0)));
         return path;
     }
 }
