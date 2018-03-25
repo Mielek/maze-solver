@@ -6,11 +6,11 @@ import static org.assertj.core.api.Assertions.*;
 
 public class SimpleMazeSolverTest {
     @Test
-    public void oneLineMaze(){
+    public void solveMazeWithOneLineCorridorInXAxis(){
         Maze maze = Maze.builder()
                 .setBoard(new int[][]{{0},{0}})
-                .setStart(new MazePoint(0, 0))
-                .setTarget(new MazePoint(1, 0))
+                .setStart(MazePoint.of(0, 0))
+                .setTarget(MazePoint.of(1, 0))
                 .build();
         SimpleMazeSolver solver = new SimpleMazeSolver(maze);
 
@@ -35,5 +35,21 @@ public class SimpleMazeSolverTest {
 
         assertThat(path).isNotNull();
         assertThat(path.getPoints()).isNotNull().isNotNull().containsExactly(startTargetPoint);
+    }
+
+    @Test
+    public void solveMazeWithOneLineCorridorInYAxis(){
+        Maze maze = Maze.builder()
+                .setBoard(new int[][]{{0, 0}})
+                .setStart(MazePoint.of(0, 0))
+                .setTarget(MazePoint.of(0, 1))
+                .build();
+        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+
+        MazePath path = solver.solve();
+
+        assertThat(path).isNotNull();
+        assertThat(path.getPoints()).isNotNull().isNotEmpty()
+                .containsExactly(MazePoint.of(0, 0), MazePoint.of(0, 1));
     }
 }
