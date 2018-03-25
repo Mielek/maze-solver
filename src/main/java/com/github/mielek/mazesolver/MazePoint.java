@@ -2,18 +2,23 @@ package com.github.mielek.mazesolver;
 
 import java.util.Objects;
 
-public class IntegerPoint {
+public class MazePoint {
 
     private int x;
     private int y;
 
-    public IntegerPoint(){
+    public MazePoint(){
         // x and why will be initialized with 0 value
     }
 
-    public IntegerPoint(int x, int y){
+    public MazePoint(int x, int y){
         this.x=x;
         this.y=y;
+    }
+
+    public MazePoint(MazePoint cpy) {
+        this.x = cpy.x;
+        this.y = cpy.y;
     }
 
     public int getX() {
@@ -36,7 +41,7 @@ public class IntegerPoint {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IntegerPoint that = (IntegerPoint) o;
+        MazePoint that = (MazePoint) o;
         return x == that.x &&
                 y == that.y;
     }
@@ -49,5 +54,9 @@ public class IntegerPoint {
     @Override
     public String toString() {
         return "Point{" + x + "," + y + '}';
+    }
+
+    public static Object of(int x, int y) {
+        return new MazePoint(x, y);
     }
 }
