@@ -39,12 +39,23 @@ public class SimpleMazeSolverTest {
     }
 
     @Test
-    public void solveMazeWithOneLineCorridorInXAxisWithThreePoints() {
+    public void solveMazeWithOneLineCorridorInXAxisWithLengthOf3() {
         MazePoint dimension = MazePoint.of(3, 1);
         int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(2, 0);
         MazePoint[] expectedPath = new MazePoint[]{start, MazePoint.of(1, 0), target};
+
+        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+    }
+
+    @Test
+    public void solveMazeWithOneLineCorridorInYAxisWithLengthOf3() {
+        MazePoint dimension = MazePoint.of(1, 3);
+        int[][] board = new int[dimension.getX()][dimension.getY()];
+        MazePoint start = MazePoint.of(0, 0);
+        MazePoint target = MazePoint.of(0, 2);
+        MazePoint[] expectedPath = new MazePoint[]{start, MazePoint.of(0, 1), target};
 
         solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
     }
