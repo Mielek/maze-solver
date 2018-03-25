@@ -1,6 +1,7 @@
 package com.github.mielek.mazesolver;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleMazeSolver extends MazeSolver {
     public SimpleMazeSolver(Maze maze) {
@@ -10,18 +11,21 @@ public class SimpleMazeSolver extends MazeSolver {
     @Override
     public MazePath solve() {
         MazePath path = new MazePath();
-        if(maze.getStart().equals(maze.getTarget())){
+        if (maze.getStart().equals(maze.getTarget())) {
             path.getPoints().add(maze.getStart());
-        } else if(maze.getBoard().length>1) {
-            path.getPoints().addAll(
-                    Arrays.asList(
-                            MazePoint.of(0, 0),
-                            MazePoint.of(1, 0)));
         } else {
-            path.getPoints().addAll(
-                    Arrays.asList(
-                            MazePoint.of(0, 0),
-                            MazePoint.of(0, 1)));
+            MazePoint dimension = maze.getDimension();
+            List<MazePoint> pathPoints = new ArrayList<>();
+            if (dimension.getX() > dimension.getY()) {
+                for (int x = 0; x < dimension.getX(); ++x) {
+                    pathPoints.add(MazePoint.of(x, 0));
+                }
+            } else {
+                for (int y = 0; y < dimension.getY(); ++y) {
+                    pathPoints.add(MazePoint.of(0, y));
+                }
+            }
+            path.setPoints(pathPoints);
         }
         return path;
     }

@@ -11,6 +11,7 @@ public class Maze {
     private int[][] board;
     private MazePoint start;
     private MazePoint target;
+    private MazePoint dimension;
 
     public static MazeBuilder builder() {
         return new MazeBuilder();
@@ -28,12 +29,21 @@ public class Maze {
         return board;
     }
 
+    public MazePoint getDimension() {
+        return dimension;
+    }
+
 
     public static class MazeBuilder{
         Maze mazeToBuild = new Maze();
 
         public MazeBuilder setBoard(int[][] board){
             mazeToBuild.board = board;
+            return this;
+        }
+
+        public MazeBuilder setDimension(MazePoint dimension){
+            mazeToBuild.dimension = dimension;
             return this;
         }
 
@@ -53,6 +63,7 @@ public class Maze {
             for (int i = 0; i < result.board.length; ++i) {
                 System.arraycopy(mazeToBuild.board[i],0,result.board[i],0, mazeToBuild.board[i].length);
             }
+            result.dimension = new MazePoint(mazeToBuild.dimension);
             result.start = new MazePoint(mazeToBuild.start);
             result.target = new MazePoint(mazeToBuild.target);
             return result;

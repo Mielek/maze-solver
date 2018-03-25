@@ -12,4 +12,8 @@ public class MazePath {
     public List<MazePoint> getPoints() {
         return points;
     }
+
+    void setPoints(List<MazePoint> points) {
+        this.points = points;
+    }
 }
