@@ -16,11 +16,8 @@ public class SimpleMazeSolverTest {
 
         MazePath path = solver.solve();
 
-        assertThat(path)
-                .isNotNull()
-                .extracting("points")
-                .isNotEmpty()
+        assertThat(path).isNotNull();
+        assertThat(path.getPoints()).isNotNull().isNotEmpty()
                 .containsExactly(MazePoint.of(0, 0), MazePoint.of(1, 0), MazePoint.of(2, 0));
-
     }
 }

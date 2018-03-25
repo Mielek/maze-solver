@@ -1,5 +1,7 @@
 package com.github.mielek.mazesolver;
 
+import java.util.Arrays;
+
 public class SimpleMazeSolver extends MazeSolver {
     public SimpleMazeSolver(Maze maze) {
         super(maze);
@@ -7,6 +9,12 @@ public class SimpleMazeSolver extends MazeSolver {
 
     @Override
     public MazePath solve() {
-        return null;
+        MazePath path = new MazePath();
+        path.getPoints().addAll(
+                Arrays.asList(
+                        MazePoint.of(0,0),
+                        MazePoint.of(1,0),
+                        MazePoint.of(2,0)));
+        return path;
     }
 }

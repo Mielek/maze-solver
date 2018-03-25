@@ -56,7 +56,7 @@ public class MazePoint {
         return "Point{" + x + "," + y + '}';
     }
 
-    public static Object of(int x, int y) {
+    public static MazePoint of(int x, int y) {
         return new MazePoint(x, y);
     }
 }
