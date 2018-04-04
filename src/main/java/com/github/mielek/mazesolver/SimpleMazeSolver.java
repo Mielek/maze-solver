@@ -18,10 +18,14 @@ public class SimpleMazeSolver extends MazeSolver {
             List<MazePoint> pathPoints = new ArrayList<>();
             if (dimension.getX() > dimension.getY()) {
                 for (int x = 0; x < dimension.getX(); ++x) {
+                    if(maze.getBoard()[x][0] != 0)
+                        return new MazePath();
                     pathPoints.add(MazePoint.of(x, 0));
                 }
             } else {
                 for (int y = 0; y < dimension.getY(); ++y) {
+                    if(maze.getBoard()[0][y] != 0)
+                        return new MazePath();
                     pathPoints.add(MazePoint.of(0, y));
                 }
             }
