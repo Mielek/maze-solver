@@ -1,5 +1,7 @@
 package com.github.mielek.mazesolver;
 
+import org.assertj.core.api.Condition;
+import org.assertj.core.api.ListAssert;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -100,6 +102,41 @@ public class SimpleMazeSolverTest {
         assertThat(path.getPoints()).isNotNull().isEmpty();
     }
 
+    @Test
+    public void solveNoWallSquareMazeWithEndsOnDiagonal(){
+        MazePoint dimension = MazePoint.of(3, 3);
+        int[][] board = new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        MazePoint start = MazePoint.of(0, 0);
+        MazePoint target = MazePoint.of(2, 2);
+        Maze maze = Maze.builder()
+                .setDimension(dimension)
+                .setBoard(board)
+                .setStart(start)
+                .setTarget(target)
+                .build();
+        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+
+        MazePath path = solver.solve();
+
+        assertThat(path).isNotNull();
+        assertThat(path.getPoints()).isNotNull().isNotEmpty().doesNotHaveDuplicates().startsWith(start).endsWith(target);
+        isPathConsistent(path);
+
+    }
+
+    private void isPathConsistent(MazePath path) {
+        for (int i = 0; i < path.getPoints().size()-1; ++i) {
+            MazePoint current = path.getPoints().get(i);
+            MazePoint next = path.getPoints().get(i+1);
+            if (current.getX() + 1 == next.getX()) {
+                assertThat(current.getY()).isEqualTo(next.getY()).withFailMessage("Path is not consistent is {} value", i);
+            } else if (current.getY() + 1 == next.getY()) {
+                assertThat(current.getX()).isEqualTo(current.getX()).withFailMessage("Path is not consistent is {} value", i);
+            } else {
+                fail("Path is not consistent");
+            }
+        }
+    }
 
 
     private void solveMazeAndCheckExpectedPath(MazePoint dimension, int[][] board, MazePoint start, MazePoint target, MazePoint[] expectedPath) {
@@ -114,6 +151,7 @@ public class SimpleMazeSolverTest {
         MazePath path = solver.solve();
 
         assertThat(path).isNotNull();
-        assertThat(path.getPoints()).isNotNull().isNotEmpty().containsExactly(expectedPath);
+        assertThat(path.getPoints()).isNotNull().isNotEmpty().startsWith(start).endsWith(target).containsExactly(expectedPath);
+        isPathConsistent(path);
     }
 }
