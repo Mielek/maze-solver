@@ -2,6 +2,9 @@ package com.github.mielek.mazesolver;
 
 import java.util.*;
 
+/**
+ * Simple maze solver. It uses simple recursive algorithm to find path in maze.
+ */
 public class SimpleMazeSolver extends MazeSolver {
 
     List<MazePoint> path = null;
@@ -13,16 +16,17 @@ public class SimpleMazeSolver extends MazeSolver {
 
     @Override
     public MazePath solve() {
-        if(path==null){
+        if(path==null){ // we do not need to solve maze again
             path = new ArrayList<>();
             if (maze.getStart().equals(maze.getTarget())) {
                 path.add(maze.getStart());
             } else {
                 findTarget(maze.getStart());
-                Collections.reverse(path);
+                Collections.reverse(path); // we need to reverse path because it was filled in reverse order
+                checked = null; // not needed but it removes not needed references
             }
         }
-        return new MazePath(path);
+        return new MazePath(new ArrayList<>(path));
     }
 
     private boolean findTarget(MazePoint point) {
