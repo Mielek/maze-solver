@@ -37,6 +37,10 @@ public class MazePoint {
         this.y = y;
     }
 
+    public MazePoint transform(int x, int y) {
+        return of(this.x + x, this.y + y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,4 +63,5 @@ public class MazePoint {
     public static MazePoint of(int x, int y) {
         return new MazePoint(x, y);
     }
+
 }

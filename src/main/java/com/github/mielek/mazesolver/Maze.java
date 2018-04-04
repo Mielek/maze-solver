@@ -1,12 +1,12 @@
 package com.github.mielek.mazesolver;
 
-
-import java.util.Arrays;
-
 /**
  * Maze
  */
 public class Maze {
+
+    public int CORRIDOR=0;
+    public int WALL=1;
 
     private int[][] board;
     private MazePoint start;

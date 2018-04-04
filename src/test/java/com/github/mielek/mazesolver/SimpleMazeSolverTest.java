@@ -64,7 +64,7 @@ public class SimpleMazeSolverTest {
 
     @Test
     public void solveMazeWithNoPathInOneLineCorridorInXAxisBecauseOfWall() {
-        MazePoint dimension = MazePoint.of(3, 0);
+        MazePoint dimension = MazePoint.of(3, 1);
         int[][] board = new int[][]{{0}, {1}, {0}};
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(2, 0);
@@ -84,7 +84,7 @@ public class SimpleMazeSolverTest {
 
     @Test
     public void solveMazeWithNoPathInOneLineCorridorInYAxisBecauseOfWall() {
-        MazePoint dimension = MazePoint.of(0, 3);
+        MazePoint dimension = MazePoint.of(1, 3);
         int[][] board = new int[][]{{0, 1, 0}};
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(0, 2);

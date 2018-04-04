@@ -9,6 +9,10 @@ public class MazePath {
     public MazePath() {
     }
 
+    public MazePath(List<MazePoint> points) {
+        this.points = points;
+    }
+
     public List<MazePoint> getPoints() {
         return points;
     }
