@@ -1,7 +1,5 @@
 package com.github.mielek.mazesolver;
 
-import org.assertj.core.api.Condition;
-import org.assertj.core.api.ListAssert;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -120,6 +118,28 @@ public class SimpleMazeSolverTest {
 
         assertThat(path).isNotNull();
         assertThat(path.getPoints()).isNotNull().isNotEmpty().doesNotHaveDuplicates().startsWith(start).endsWith(target);
+        isPathConsistent(path);
+    }
+
+    @Test
+    public void solveSquareMazeWithWallsWithEndsOnDiagonal(){
+        MazePoint dimension = MazePoint.of(4, 4);
+        int[][] board = new int[][]{{0, 0, 0, 0}, {0, 1, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}};
+        MazePoint start = MazePoint.of(0, 0);
+        MazePoint target = MazePoint.of(3, 3);
+        Maze maze = Maze.builder()
+                .setDimension(dimension)
+                .setBoard(board)
+                .setStart(start)
+                .setTarget(target)
+                .build();
+        SimpleMazeSolver solver = new SimpleMazeSolver(maze);
+
+        MazePath path = solver.solve();
+
+        assertThat(path).isNotNull();
+        assertThat(path.getPoints()).isNotNull().isNotEmpty().doesNotHaveDuplicates().startsWith(start).endsWith(target)
+                .doesNotContain(MazePoint.of(1, 1), MazePoint.of(1, 2), MazePoint.of(2, 1), MazePoint.of(2, 2));
         isPathConsistent(path);
     }
 
