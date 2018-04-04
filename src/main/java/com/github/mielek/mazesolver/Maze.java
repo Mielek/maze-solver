@@ -5,8 +5,8 @@ package com.github.mielek.mazesolver;
  */
 public class Maze {
 
-    public int CORRIDOR=0;
-    public int WALL=1;
+    public static final int CORRIDOR=0;
+    public static final int WALL=1;
 
     private int[][] board;
     private MazePoint start;

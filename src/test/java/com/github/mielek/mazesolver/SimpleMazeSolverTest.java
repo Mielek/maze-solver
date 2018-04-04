@@ -121,7 +121,6 @@ public class SimpleMazeSolverTest {
         assertThat(path).isNotNull();
         assertThat(path.getPoints()).isNotNull().isNotEmpty().doesNotHaveDuplicates().startsWith(start).endsWith(target);
         isPathConsistent(path);
-
     }
 
     private void isPathConsistent(MazePath path) {
@@ -131,6 +130,10 @@ public class SimpleMazeSolverTest {
             if (current.getX() + 1 == next.getX()) {
                 assertThat(current.getY()).isEqualTo(next.getY()).withFailMessage("Path is not consistent is {} value", i);
             } else if (current.getY() + 1 == next.getY()) {
+                assertThat(current.getX()).isEqualTo(current.getX()).withFailMessage("Path is not consistent is {} value", i);
+            } else if (current.getX() - 1 == next.getX()) {
+                assertThat(current.getY()).isEqualTo(next.getY()).withFailMessage("Path is not consistent is {} value", i);
+            } else if (current.getY() - 1 == next.getY()) {
                 assertThat(current.getX()).isEqualTo(current.getX()).withFailMessage("Path is not consistent is {} value", i);
             } else {
                 fail("Path is not consistent");

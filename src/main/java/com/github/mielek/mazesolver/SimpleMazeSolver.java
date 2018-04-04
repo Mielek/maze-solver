@@ -29,7 +29,7 @@ public class SimpleMazeSolver extends MazeSolver {
         if (isOutOfBounds(point))
             return false;
 
-        if(!checked.add(point))
+        if(!checked.add(point) || isWall(point))
             return false;
 
         if(isTarget(point) || goUp(point) || goDown(point) || goLeft(point) || goRight(point)) {
@@ -38,6 +38,10 @@ public class SimpleMazeSolver extends MazeSolver {
         }
 
         return false;
+    }
+
+    private boolean isWall(MazePoint point) {
+        return maze.getBoard()[point.getX()][point.getY()] == Maze.WALL;
     }
 
     private boolean isOutOfBounds(MazePoint point) {
