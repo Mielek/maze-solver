@@ -33,6 +33,28 @@ public class Maze {
         return dimension;
     }
 
+    public boolean isOutOfBounds(MazePoint point) {
+        if (point.getX() < 0 || point.getX() >= dimension.getX()) {
+            return true;
+        }
+        if (point.getY() < 0 || point.getY() >= dimension.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isWall(MazePoint point) {
+        return board[point.getX()][point.getY()] == Maze.WALL;
+    }
+
+    public boolean isStart(MazePoint point){
+        return  start.equals(point);
+    }
+
+    public boolean isTarget(MazePoint point){
+        return target.equals(point);
+    }
+
 
     public static class MazeBuilder{
         Maze mazeToBuild = new Maze();

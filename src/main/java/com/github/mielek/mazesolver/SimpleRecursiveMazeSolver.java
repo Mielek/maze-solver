@@ -5,12 +5,12 @@ import java.util.*;
 /**
  * Simple maze solver. It uses simple recursive algorithm to find path in maze.
  */
-public class SimpleMazeSolver extends MazeSolver {
+public class SimpleRecursiveMazeSolver extends MazeSolver {
 
     List<MazePoint> path = null;
     Set<MazePoint> checked = new HashSet<>();
 
-    public SimpleMazeSolver(Maze maze) {
+    public SimpleRecursiveMazeSolver(Maze maze) {
         super(maze);
     }
 
@@ -30,13 +30,13 @@ public class SimpleMazeSolver extends MazeSolver {
     }
 
     private boolean findTarget(MazePoint point) {
-        if (isOutOfBounds(point))
+        if (maze.isOutOfBounds(point))
             return false;
 
-        if(!checked.add(point) || isWall(point))
+        if(!checked.add(point) || maze.isWall(point))
             return false;
 
-        if(isTarget(point) || goUp(point) || goDown(point) || goLeft(point) || goRight(point)) {
+        if(maze.isTarget(point) || goUp(point) || goDown(point) || goLeft(point) || goRight(point)) {
             path.add(point);
             return true;
         }
@@ -44,37 +44,19 @@ public class SimpleMazeSolver extends MazeSolver {
         return false;
     }
 
-    private boolean isWall(MazePoint point) {
-        return maze.getBoard()[point.getX()][point.getY()] == Maze.WALL;
-    }
-
-    private boolean isOutOfBounds(MazePoint point) {
-        if (point.getX() < 0 || point.getX() >= maze.getDimension().getX()) {
-            return true;
-        }
-        if (point.getY() < 0 || point.getY() >= maze.getDimension().getY()) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isTarget(MazePoint point){
-        return maze.getTarget().equals(point);
-    }
-
     private boolean goUp(MazePoint point) {
-        return findTarget(point.transform(0, -1));
+        return findTarget(point.goUp());
     }
 
     private boolean goDown(MazePoint point) {
-        return findTarget(point.transform(0, 1));
+        return findTarget(point.goDown());
     }
 
     private boolean goLeft(MazePoint point) {
-        return findTarget(point.transform(-1, 0));
+        return findTarget(point.goLeft());
     }
 
     private boolean goRight(MazePoint point) {
-        return findTarget(point.transform(1, 0));
+        return findTarget(point.goRight());
     }
 }

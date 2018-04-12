@@ -11,7 +11,7 @@ public class MazePoint {
     private int y;
 
     public MazePoint(){
-        // x and why will be initialized with 0 value
+        // x and y will be initialized with 0 value
     }
 
     public MazePoint(int x, int y){
@@ -49,6 +49,23 @@ public class MazePoint {
     public MazePoint transform(int x, int y) {
         return of(this.x + x, this.y + y);
     }
+
+    public MazePoint goUp(){
+        return transform(0, -1);
+    }
+
+    public  MazePoint goDown(){
+        return transform(0, 1);
+    }
+
+    public MazePoint goLeft(){
+        return transform(-1, 0);
+    }
+
+    public MazePoint goRight(){
+        return transform(1, 0);
+    }
+
 
     @Override
     public boolean equals(Object o) {
