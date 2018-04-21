@@ -4,11 +4,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleRecursiveMazeSolverTest extends AbstractMazeSolverTest {
-    @Override
-    protected MazeSolver provideSolver(Maze maze) {
-        return new SimpleRecursiveMazeSolver(maze);
-    }
+public abstract class ShortestPathMazeSolverTest extends AbstractMazeSolverTest {
 
     @Test
     public void pathFoundInMazeIsShortest() {
@@ -36,7 +32,8 @@ public class SimpleRecursiveMazeSolverTest extends AbstractMazeSolverTest {
 
         assertThat(path).isNotNull();
         assertThat(path.getPoints()).isNotNull().isNotEmpty().doesNotHaveDuplicates().startsWith(start).endsWith(target)
-                .doesNotContainAnyElementsOf(createWallListFromMazeBoard(board)).hasSize(11);
+                .doesNotContainAnyElementsOf(createWallListFromMazeBoard(board)).hasSize(9);
         isPathConsistent(path);
     }
+
 }

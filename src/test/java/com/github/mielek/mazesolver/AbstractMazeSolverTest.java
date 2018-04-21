@@ -5,9 +5,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractMazeSolverTest {
+
+    private static final char WALL = '*';
 
     /*  ##############
      *  # TEST CASES #
@@ -17,62 +19,57 @@ public abstract class AbstractMazeSolverTest {
     @Test
     public void solveMazeWithOneLineCorridorInXAxisWithTwoPoints() {
         MazePoint dimension = MazePoint.of(2, 1);
-        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(1, 0);
         MazePoint[] expectedPath = new MazePoint[]{start, target};
 
-        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+        solveMazeAndCheckExpectedPath(dimension, start, target, expectedPath);
     }
 
     @Test
     public void startAndTargetAtTheSamePoint() {
         MazePoint dimension = MazePoint.of(1, 1);
-        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = new MazePoint(0, 0);
-        MazePoint target = start;
         MazePoint[] expectedPath = new MazePoint[]{start};
 
-        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+        solveMazeAndCheckExpectedPath(dimension, start, start, expectedPath);
     }
 
     @Test
     public void solveMazeWithOneLineCorridorInYAxisWithTwoPoints() {
         MazePoint dimension = MazePoint.of(1, 2);
-        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = new MazePoint(0, 0);
         MazePoint target = new MazePoint(0, 1);
         MazePoint[] expectedPath = new MazePoint[]{start, target};
 
-        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+        solveMazeAndCheckExpectedPath(dimension, start, target, expectedPath);
     }
 
     @Test
     public void solveMazeWithOneLineCorridorInXAxisWithLengthOf3() {
         MazePoint dimension = MazePoint.of(3, 1);
-        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(2, 0);
         MazePoint[] expectedPath = new MazePoint[]{start, MazePoint.of(1, 0), target};
 
-        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+        solveMazeAndCheckExpectedPath(dimension, start, target, expectedPath);
     }
 
     @Test
     public void solveMazeWithOneLineCorridorInYAxisWithLengthOf3() {
         MazePoint dimension = MazePoint.of(1, 3);
-        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(0, 2);
         MazePoint[] expectedPath = new MazePoint[]{start, MazePoint.of(0, 1), target};
 
-        solveMazeAndCheckExpectedPath(dimension, board, start, target, expectedPath);
+        solveMazeAndCheckExpectedPath(dimension, start, target, expectedPath);
     }
 
     @Test
     public void solveMazeWithNoPathInOneLineCorridorInXAxisBecauseOfWall() {
-        MazePoint dimension = MazePoint.of(3, 1);
-        int[][] board = new int[][]{{0}, {1}, {0}};
+        String stringBoard = " * ";
+        int[][] board = createBoardFromString(stringBoard);
+        MazePoint dimension = MazePoint.of(board.length, board[0].length);
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(2, 0);
         Maze maze = Maze.builder()
@@ -91,8 +88,12 @@ public abstract class AbstractMazeSolverTest {
 
     @Test
     public void solveMazeWithNoPathInOneLineCorridorInYAxisBecauseOfWall() {
-        MazePoint dimension = MazePoint.of(1, 3);
-        int[][] board = new int[][]{{0, 1, 0}};
+        String stringBoard =
+                " \n" +
+                        "*\n" +
+                        " ";
+        int[][] board = createBoardFromString(stringBoard);
+        MazePoint dimension = MazePoint.of(board.length, board[0].length);
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(0, 2);
         Maze maze = Maze.builder()
@@ -112,7 +113,7 @@ public abstract class AbstractMazeSolverTest {
     @Test
     public void solveNoWallSquareMazeWithEndsOnDiagonal(){
         MazePoint dimension = MazePoint.of(3, 3);
-        int[][] board = new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        int[][] board = new int[dimension.getX()][dimension.getY()];
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(2, 2);
         Maze maze = Maze.builder()
@@ -132,8 +133,13 @@ public abstract class AbstractMazeSolverTest {
 
     @Test
     public void solveSquareMazeWithWallsInsideAndCorridorsOnBordersWithEndsOnDiagonal(){
-        MazePoint dimension = MazePoint.of(4, 4);
-        int[][] board = new int[][]{{0, 0, 0, 0}, {0, 1, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}};
+        String stringBoard =
+                "    \n" +
+                        " ** \n" +
+                        " ** \n" +
+                        "    ";
+        int[][] board = createBoardFromString(stringBoard);
+        MazePoint dimension = MazePoint.of(board.length, board[0].length);
         MazePoint start = MazePoint.of(0, 0);
         MazePoint target = MazePoint.of(3, 3);
         Maze maze = Maze.builder()
@@ -154,8 +160,14 @@ public abstract class AbstractMazeSolverTest {
 
     @Test
     public void solveSquareMazeWithWallsOnBordersAndCorridorInsideWithEndsOnDiagonal(){
-        MazePoint dimension = MazePoint.of(4, 4);
-        int[][] board = new int[][]{{1, 1, 1, 1}, {1, 0, 0, 1}, {1, 0, 0, 1}, {1, 1, 1, 1}};
+        String stringBoard =
+                "****\n" +
+                        "*  *\n" +
+                        "*  *\n" +
+                        "****";
+        int[][] board = createBoardFromString(stringBoard);
+        MazePoint dimension = MazePoint.of(board.length, board[0].length);
+
         MazePoint start = MazePoint.of(1, 1);
         MazePoint target = MazePoint.of(2, 2);
         Maze maze = Maze.builder()
@@ -186,12 +198,28 @@ public abstract class AbstractMazeSolverTest {
      *  ##################
      */
 
+    protected int[][] createBoardFromString(String string) {
+        String[] lines = string.split("\n");
+        int xMax = lines[0].length();
+        int yMax = lines.length;
+        int[][] board = new int[xMax][yMax];
+        for (int y = 0; y < yMax; ++y) {
+            for (int x = 0; x < xMax; ++x) {
+                if (lines[y].charAt(x) == WALL) {
+                    board[x][y] = Maze.WALL;
+                }
+            }
+        }
+        return board;
+    }
+
     protected List<MazePoint> createWallListFromMazeBoard(int[][] board){
         List<MazePoint> wallPoints = new ArrayList<>();
         for (int x = 0; x < board.length; ++x) {
             for (int y = 0; y < board[x].length; ++y) {
-                if(board[x][y]>0)
+                if (board[x][y] > 0) {
                     wallPoints.add(MazePoint.of(x, y));
+                }
             }
         }
         return wallPoints;
@@ -202,23 +230,24 @@ public abstract class AbstractMazeSolverTest {
             MazePoint current = path.getPoints().get(i);
             MazePoint next = path.getPoints().get(i+1);
             if (current.getX() + 1 == next.getX()) {
-                assertThat(current.getY()).isEqualTo(next.getY()).withFailMessage("Path is not consistent in {} value", i);
+                assertThat(current.getY()).withFailMessage("Path is not consistent in {} value", i).isEqualTo(next.getY());
             } else if (current.getY() + 1 == next.getY()) {
-                assertThat(current.getX()).isEqualTo(current.getX()).withFailMessage("Path is not consistent in {} value", i);
+                assertThat(current.getX()).withFailMessage("Path is not consistent in {} value", i).isEqualTo(current.getX());
             } else if (current.getX() - 1 == next.getX()) {
-                assertThat(current.getY()).isEqualTo(next.getY()).withFailMessage("Path is not consistent in {} value", i);
-            } else if (current.getY() - 1 == next.getY()) {
-                assertThat(current.getX()).isEqualTo(current.getX()).withFailMessage("Path is not consistent in {} value", i);
-            } else {
-                fail("Path is not consistent. Out of test cases. Really bad. Really.");
+                assertThat(current.getY()).withFailMessage("Path is not consistent in {} value", i).isEqualTo(next.getY());
+            } else /*if (current.getY() - 1 == next.getY())*/ {
+                assertThat(current.getX()).withFailMessage("Path is not consistent in {} value", i).isEqualTo(current.getX());
             }
+            /*else {
+                fail("Path is not consistent. Out of test cases. Really bad. Really.");
+            }*/
         }
     }
 
-    protected void solveMazeAndCheckExpectedPath(MazePoint dimension, int[][] board, MazePoint start, MazePoint target, MazePoint[] expectedPath) {
+    protected void solveMazeAndCheckExpectedPath(MazePoint dimension, MazePoint start, MazePoint target, MazePoint[] expectedPath) {
         Maze maze = Maze.builder()
                 .setDimension(dimension)
-                .setBoard(board)
+                .setBoard(new int[dimension.getX()][dimension.getY()])
                 .setStart(start)
                 .setTarget(target)
                 .build();
