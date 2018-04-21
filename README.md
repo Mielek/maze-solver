@@ -1,7 +1,7 @@
 # Maze solver project
 
 The maze solver is a demonstration application which solves maze(labyrinth).
-It now contains 2 solving algorithms which shows different approaches to the problem.
+It now contains 3 solving algorithms which shows different approaches to the problem.
 
 ## User Guide
 
